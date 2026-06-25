@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球神直播 · 再访与收藏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background-color: #f5f3f0;
+        }
+        .hero {
+            background: linear-gradient(145deg, #0f1117 0%, #1f2029 100%);
+            color: #e8e6df;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,190,80,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content {
+            max-width: 780px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            color: #f7f3ea;
+        }
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #bcb7aa;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: inline-block;
+            padding-top: 0.6rem;
+        }
+        .hero .tagline {
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0.8rem auto 0;
+            color: #cdc9be;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem 1.8rem 4rem;
+        }
+        .intro-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2.5rem 2.8rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            transition: box-shadow 0.2s;
+        }
+        .intro-card p {
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: #3b3b3b;
+        }
+        .intro-card p:last-child {
+            margin-bottom: 0;
+        }
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+            margin: 2.8rem 0;
+        }
+        .highlight-item {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+            border-left: 4px solid #d4a15c;
+        }
+        .highlight-item h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1f1f1f;
+            margin-bottom: 0.8rem;
+        }
+        .highlight-item p, .highlight-item ul {
+            color: #4a4a4a;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .highlight-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .highlight-item li {
+            padding: 0.35rem 0;
+            position: relative;
+            padding-left: 1.4rem;
+        }
+        .highlight-item li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: #d4a15c;
+            font-weight: bold;
+        }
+        .scene-note {
+            background: #fefcf8;
+            border-radius: 28px;
+            padding: 2.2rem 2.5rem;
+            margin: 2.2rem 0;
+            border: 1px solid #ece6db;
+        }
+        .scene-note h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #1d1d1d;
+            margin-bottom: 1.2rem;
+        }
+        .scene-note p {
+            margin-bottom: 1rem;
+            color: #3e3e3e;
+        }
+        .faq-mini {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem 2.5rem;
+            margin: 2.2rem 0 1rem;
+        }
+        .faq-mini details {
+            border-bottom: 1px solid #eee7dd;
+            padding: 0.9rem 0;
+        }
+        .faq-mini details:last-of-type {
+            border-bottom: none;
+        }
+        .faq-mini summary {
+            font-weight: 500;
+            color: #222;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        .faq-mini summary::before {
+            content: '▹';
+            margin-right: 10px;
+            color: #d4a15c;
+            font-size: 1.1rem;
+        }
+        .faq-mini details p {
+            margin-top: 0.8rem;
+            margin-left: 1.6rem;
+            color: #5a5a5a;
+            font-size: 0.95rem;
+        }
+        .cta-reminder {
+            text-align: center;
+            margin: 3rem 0 1.5rem;
+            padding: 1.8rem 2rem;
+            background: #f5f0e8;
+            border-radius: 60px;
+        }
+        .cta-reminder p {
+            font-size: 1.05rem;
+            color: #2d2d2d;
+        }
+        a {
+            color: #b57c3e;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, color 0.15s;
+        }
+        a:hover {
+            color: #8f642f;
+            border-bottom-color: #b57c3e;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 3.5rem;
+            padding: 1.5rem 0 0.5rem;
+            font-size: 0.85rem;
+            color: #8a857b;
+            border-top: 1px solid #e0d8cc;
+        }
+        @media (max-width: 680px) {
+            .hero { padding: 3.5rem 1.5rem 2.8rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .container { padding: 2rem 1rem 3rem; }
+            .intro-card { padding: 1.8rem 1.5rem; }
+            .highlight-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .highlight-item { padding: 1.5rem 1.3rem; }
+            .scene-note { padding: 1.5rem 1.3rem; }
+            .faq-mini { padding: 1.5rem 1.3rem; }
+        }
+        @media (max-width: 440px) {
+            .hero h1 { font-size: 1.9rem; }
+            .cta-reminder { padding: 1.2rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>球神直播</h1>
+        <div class="sub">再访 · 收藏 · 日常</div>
+        <p class="tagline">
+            它就在那里，不喧闹也不消失。如果你曾停下来看过，大概知道那种节奏。
+        </p>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- 摘要：为何再次回来 -->
+    <div class="intro-card">
+        <p>
+            有些地方你会反复回去，不是因为它每次都有新花样，而是因为它总保留着你熟悉的温度。
+            <a href="https://space-qiushen.com">球神直播</a> 给我的感觉就是这样——界面干净，内容摆放有秩序，
+            不会突然弹出一堆东西打乱思绪。你翻开它，像翻开一本常读常新的笔记本，
+            每一页都写着你上次停下的位置。
+        </p>
+        <p>
+            这次再打开，发现它依旧保持着那种从容。没有铺满屏幕的催促，没有夸张的口号，
+            只有直播内容的自然排列，以及那些你可能会感兴趣的亮点被安静地放在那里。
+            收藏它，就像是给自己留了一个随时可以回去的安静角落。
+        </p>
+    </div>
+
+    <!-- 亮点卡片网格 -->
+    <div class="highlight-grid">
+        <div class="highlight-item">
+            <h3>浏览的节奏由你决定</h3>
+            <p>
+                页面不会强行拽着你走。你可以快速扫过列表，也可以停在某个画面里多看一会儿。
+                所有的跳转和切换都顺滑且克制，没有烦人的浮动层打断你。
+            </p>
+        </div>
+        <div class="highlight-item">
+            <h3>内容归类清晰</h3>
+            <ul>
+                <li>直播分区一目了然，不需要反复点错</li>
+                <li>近期回放与预告并存，方便规划时间</li>
+                <li>热门推荐不带夸张标签，只展示内容本身</li>
+            </ul>
+        </div>
+        <div class="highlight-item">
+            <h3>重访者的隐形便利</h3>
+            <p>
+                如果你使用同一设备再次打开，网站会记住你上次浏览的大致位置（在合理范围内）。
+                这种细节让重复访问变得自然，而不需要每次从头翻起。
+            </p>
+        </div>
+        <div class="highlight-item">
+            <h3>视觉不疲惫</h3>
+            <p>
+                配色偏柔和，深色区域和浅色内容区之间过渡平缓。长时间浏览也不容易累，
+                尤其适合睡前或通勤时随意看看。
+            </p>
+        </div>
+    </div>
+
+    <!-- 使用建议 / 场景 -->
+    <div class="scene-note">
+        <h2>几个我习惯的使用场景</h2>
+        <p>
+            周末早晨，把平板支在厨房台面上，一边煮咖啡一边开着它的某个直播间当作背景音——
+            不需要一直盯着，偶尔抬头看一眼，节奏刚好合拍。另一个场景是午休前，
+            我会把手机亮度调低，翻翻回放列表里的前两分钟片段，遇到感兴趣的就收藏，
+            留着晚上再看。这种“轻触即走”的体验，让球神直播在书签栏里占据了一个固定位置。
+        </p>
+        <p>
+            也推荐你把它的页面添加到手机主屏幕（iOS 的“添加到主屏幕”或 Android 的“快捷方式”），
+            这样下次打开就像启动一个原生应用，少了一步打开浏览器的动作，更顺手。
+        </p>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+        <h2 style="font-size:1.2rem; font-weight:500; margin-bottom:0.5rem; color:#1d1d1d;">偶尔会遇到的小问题</h2>
+        <details>
+            <summary>页面加载速度稳定吗？</summary>
+            <p>
+                多数地区访问流畅。直播流依赖你的网络环境，如果出现卡顿，可以尝试切换清晰度或稍后重试。
+                网页本身的加载和导航速度一直比较可靠。
+            </p>
+        </details>
+        <details>
+            <summary>内容会频繁变动吗？</summary>
+            <p>
+                直播内容按自然节奏更新——有新直播时出现，结束后转为回放。整体架构保持稳定，
+                你熟悉的分类和导航不会突然消失。偶尔会有细微的布局调整，但不会影响使用习惯。
+            </p>
+        </details>
+        <details>
+            <summary>收藏后会不会失效？</summary>
+            <p>
+                收藏链接是长期有效的页面地址。只要正常联网，就可以通过书签或主屏幕图标直接打开。
+                建议每隔一段时间清理一下缓存，避免旧版本数据干扰。
+            </p>
+        </details>
+        <details>
+            <summary>有必要注册或登录吗？</summary>
+            <p>
+                大部分内容无需登录即可浏览。部分互动功能（如评论、个性化推荐）可能需要简单注册。
+                具体以页面上的提示为准，每一步都有明确的说明。
+            </p>
+        </details>
+    </div>
+
+    <!-- 可信但克制的访问提示 -->
+    <div class="cta-reminder">
+        <p>
+            <strong>如果你还没有把它放进书签栏</strong><br>
+            下次随手再打开时，也许可以试试直接输入 <a href="https://space-qiushen.com">球神直播</a>，
+            或者长按链接选择“添加到主屏幕”。不必刻意，自然就好。
+        </p>
+    </div>
+
+    <div class="footer-note">
+        <p>— 一次安静的再访，胜过十次匆忙的浏览 —</p>
+    </div>
+</div>
+
+</body>
+</html>
