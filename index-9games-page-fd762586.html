@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九游 · 信息索引 | 快速识别网站用途</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #f9e3b6 0%, #f6cd93 40%, #f3b87a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2.5rem 1.2rem;
+            line-height: 1.6;
+            color: #2d2a1f;
+        }
+
+        .page-wrapper {
+            max-width: 1120px;
+            width: 100%;
+        }
+
+        /* 简洁头部 */
+        .site-header {
+            margin-bottom: 2rem;
+        }
+
+        .site-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #4a3722;
+            background: rgba(255, 245, 220, 0.5);
+            backdrop-filter: blur(3px);
+            display: inline-block;
+            padding: 0.3rem 1.6rem 0.3rem 1.6rem;
+            border-radius: 60px;
+            box-shadow: 0 4px 10px rgba(140, 80, 20, 0.08);
+        }
+
+        .site-header p {
+            margin-top: 0.5rem;
+            color: #5f4a30;
+            font-weight: 400;
+            font-size: 1rem;
+            border-left: 4px solid #b47d4b;
+            padding-left: 1rem;
+        }
+
+        /* 知识库入口式目录卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0 1.8rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 1.6rem 1.4rem;
+            box-shadow: 0 6px 18px rgba(120, 70, 20, 0.10);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border: 1px solid rgba(255, 235, 200, 0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(110, 60, 10, 0.12);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6a4c2c;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .card h3::before {
+            content: "▹";
+            color: #c28d55;
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+
+        .card p, .card ul {
+            font-size: 0.92rem;
+            color: #3f382c;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card ul li {
+            margin-bottom: 0.35rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .card ul li::before {
+            content: "·";
+            position: absolute;
+            left: 0.2rem;
+            color: #a87b4d;
+            font-weight: bold;
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.7rem;
+        }
+
+        .badge-list span {
+            background: #ead6ba;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #3a2c1b;
+        }
+
+        /* 说明区 & 提示区 (单行融合) */
+        .info-panel {
+            background: rgba(255, 245, 225, 0.6);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.4rem 1.8rem;
+            margin: 1.2rem 0 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.5rem;
+            border-left: 6px solid #c39057;
+        }
+
+        .info-item {
+            flex: 1 1 180px;
+        }
+
+        .info-item strong {
+            display: block;
+            font-weight: 600;
+            color: #4d351b;
+            margin-bottom: 0.2rem;
+            font-size: 0.95rem;
+        }
+
+        .info-item span, .info-item small {
+            color: #4f3e2b;
+            font-size: 0.9rem;
+        }
+
+        .info-item a {
+            color: #7b562b;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            font-weight: 500;
+        }
+
+        .info-item a:hover {
+            color: #3f2b14;
+            background: #e7d0b0;
+            border-radius: 4px;
+            padding: 0 0.2rem;
+        }
+
+        /* FAQ 摘要（简洁） */
+        .faq-mini {
+            background: rgba(255, 248, 235, 0.7);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.4rem 1.8rem;
+            margin: 2rem 0 1.8rem 0;
+            border: 1px solid #e7cfae;
+        }
+
+        .faq-mini h4 {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #5a4025;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            color: #3f3423;
+        }
+
+        .faq-mini details summary {
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.2rem 0;
+            color: #5f462a;
+            transition: 0.1s;
+        }
+
+        .faq-mini details summary:hover {
+            color: #2a1e0f;
+        }
+
+        .faq-mini details p {
+            margin: 0.4rem 0 0.2rem 1.2rem;
+            color: #4c3d2b;
+            border-left: 2px solid #ceaa7c;
+            padding-left: 0.8rem;
+        }
+
+        /* 相关信息区 (链接/资源) */
+        .related-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 1.8rem;
+            padding: 0.8rem 0 0.3rem 0;
+            border-top: 1px solid #dbbc99;
+            margin-top: 0.5rem;
+        }
+
+        .related-info a {
+            background: rgba(255, 239, 210, 0.5);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            color: #3f2f1d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid #dbb586;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .related-info a:hover {
+            background: #f0dbbd;
+            border-color: #a77d4c;
+            transform: scale(1.02);
+        }
+
+        .related-info .tag-muted {
+            color: #6d5a40;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* 底部 */
+        .page-footer {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #5b492e;
+            text-align: center;
+            border-top: 1px solid #dabb94;
+            padding-top: 1rem;
+            opacity: 0.75;
+        }
+
+        /* 响应式 */
+        @media (max-width: 640px) {
+            body {
+                padding: 1.5rem 0.8rem;
+            }
+            .site-header h1 {
+                font-size: 1.5rem;
+                padding: 0.2rem 1rem;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .info-panel {
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 1rem 1.2rem;
+            }
+            .faq-mini {
+                padding: 1rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <header class="site-header">
+        <h1>📖 九游 · 知识库入口</h1>
+        <p>快速识别网站定位：游戏兴趣聚合 · 社区索引 · 内容导航</p>
+    </header>
+
+    <!-- 卡片目录——知识库感布局 -->
+    <div class="card-grid">
+        <div class="card">
+            <h3>站点概要</h3>
+            <p>该平台主要聚合游戏相关资讯、社区话题与资源索引，面向对特定游戏领域感兴趣的用户提供信息整合。不直接提供客户端下载，侧重内容导航与讨论。</p>
+            <div class="badge-list">
+                <span>游戏资讯</span>
+                <span>社区聚合</span>
+                <span>索引页</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>典型场景</h3>
+            <ul>
+                <li>快速检索特定游戏的最新讨论</li>
+                <li>浏览热门游戏攻略或版本变动</li>
+                <li>发现同好社区与内容集合</li>
+                <li>了解平台收录的游戏分类</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>特征标签</h3>
+            <ul>
+                <li>内容聚合而非原创</li>
+                <li>社区链接导向</li>
+                <li>分类标签清晰</li>
+                <li>轻导航、高信息密度</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>适合人群</h3>
+            <ul>
+                <li>想快速了解某款游戏讨论热度的玩家</li>
+                <li>寻找相关社区入口的浏览者</li>
+                <li>希望过滤无效信息的检索型用户</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 说明区 + 提示区 合并 -->
+    <div class="info-panel">
+        <div class="info-item">
+            <strong>🔍 说明</strong>
+            <span>本页为独立介绍索引，网站主体为内容导航页。所有信息仅供参考，具体以实际站点为准。如需直接访问，可前往 <a href="https://index-9games.com.cn">九游</a> 浏览最新内容。</span>
+        </div>
+        <div class="info-item">
+            <strong>💡 提示</strong>
+            <span>该站为社区索引风格，无登录也可浏览大部分分类。建议使用桌面端获得完整目录布局；部分板块可能跳转至外部社区。</span>
+        </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+        <h4>❓ 常见疑问摘要</h4>
+        <details>
+            <summary>这个网站主要提供什么？</summary>
+            <p>一个游戏相关内容的导航与聚合入口，汇集多个游戏话题、讨论区索引及实用链接，方便快速定位感兴趣的内容板块。</p>
+        </details>
+        <details>
+            <summary>与直接搜索有什么不同？</summary>
+            <p>通过预分类和社区聚合，减少信息噪音；适合希望从“目录”而非“关键词”切入的用户。</p>
+        </details>
+        <details>
+            <summary>是否需要注册？</summary>
+            <p>浏览公开索引无需注册；部分社区跳转可能依目标平台规则而定。</p>
+        </details>
+        <!-- 相关信息区 内嵌在faq下方 -->
+        <div class="related-info">
+            <span class="tag-muted">相关信息</span>
+            <a href="https://index-9games.com.cn">九游</a>
+            <a href="#">分类索引</a>
+            <a href="#">社区导航</a>
+            <a href="#">游戏话题</a>
+            <span style="font-size:0.8rem; color:#705a3d; align-self:center;">· 持续更新</span>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <span>介绍页 · 仅用于快速识别用途 · 数据来源以实际站点为准</span>
+    </footer>
+
+</div>
+</body>
+</html>
